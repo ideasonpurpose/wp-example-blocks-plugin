@@ -1,0 +1,13 @@
+services:
+  # Utility service for running composer commands. Useful for adding tools from packagist
+  # Image from: https://hub.docker.com/_/composer
+  composer:
+    image: composer:2.3.7
+    profiles: ['utility']
+    user: '${UID:-1000}:${GID:-1000}'
+    environment:
+      COMPOSER_HOME: /.composer
+    volumes:
+      - ./:/app
+      - ~/.composer:/.composer
+    command: install

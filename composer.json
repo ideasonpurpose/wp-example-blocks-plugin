@@ -1,0 +1,21 @@
+{
+	"require": {
+		"doctrine/inflector": "^2.0"
+	},
+	"authors": [
+		{
+			"name": "Ideas On Purpose",
+			"homepage": "https://www.ideasonpurpose.com"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"IdeasOnPurpose\\": [
+				"."
+			],
+			"IdeasOnPurpose\\Blocks\\": [
+				"includes"
+			]
+		}
+	}
+}

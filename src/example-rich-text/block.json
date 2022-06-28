@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "ideasonpurpose/example-rich-text",
+	"title": "Example RichText",
+	"category": "text",
+	"icon": "buddicons-community",
+	"version": "0.0.0",
+	"attributes": {
+		"message": {
+			"type": "string",
+			"source": "html",
+			"selector": "h1"
+		}
+	},
+	"supports": {
+		"align": true,
+		"color": {
+			"text": true,
+			"background": true
+		}
+	},
+	"styles": [
+		{ "name": "default", "label": "Default", "isDefault": true },
+		{ "name": "outline", "label": "Outline" }
+	],
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}
