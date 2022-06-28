@@ -2,7 +2,7 @@
 Contributors:      Ideas On Purpose
 Tags:              block
 Tested up to:      5.9
-Stable tag:        0.1.2
+Stable tag:        1.0.0
 License:           MIT
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 

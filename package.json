@@ -1,13 +1,13 @@
 {
 	"name": "iop-example-blocks",
-	"version": "0.1.2",
+	"version": "1.0.0",
 	"description": "Plugin shell for our example blocks",
 	"homepage": "https://github.com/ideasonpurpose",
 	"license": "ISC",
-  "author": "Ideas On Purpose (https://www.ideasonpurpose.com)",
-  "contributors": [
-    "Joe Maller <joe@ideasonpurpose.com>"
-  ],
+	"author": "Ideas On Purpose (https://www.ideasonpurpose.com)",
+	"contributors": [
+		"Joe Maller <joe@ideasonpurpose.com>"
+	],
 	"main": "build/index.js",
 	"files": [
 		"vendor",
