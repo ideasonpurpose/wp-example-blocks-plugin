@@ -11,7 +11,7 @@ export const Edit = (props) => {
 	return (
 		<RichText
 			{...blockProps}
-			tagName="h1"
+			tagName="div"
 			onChange={onChangeContent}
 			value={attributes.message}
 			placeholder="RichText placeholder content"

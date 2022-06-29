@@ -6,7 +6,7 @@ export const save = (props) => {
 	return (
 		<RichText.Content
 			{...blockProps}
-			tagName="h1"
+			tagName="div"
 			value={props.attributes.message}
 		/>
 	);

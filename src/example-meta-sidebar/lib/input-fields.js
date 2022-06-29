@@ -2,8 +2,6 @@ import { ToggleControl, TextControl } from '@wordpress/components';
 import { useEntityProp } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 
-console.log('lib/input-fields');
-
 export const InputFields = () => {
 	const { postType } = useSelect((select) => {
 		return {

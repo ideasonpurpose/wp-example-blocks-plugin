@@ -6,13 +6,13 @@ class Block
 {
 	public function __construct()
 	{
-		add_action("init", [$this, "register"]);
-		add_action("init", [$this, "meta"]);
+		add_action('init', [$this, 'register']);
+		add_action('init', [$this, 'meta']);
 	}
 
 	public function register()
 	{
-		$json_path = __DIR__ . "/../../build/example-meta-sidebar/block.json";
+		$json_path = __DIR__ . '/../../build/example-meta-sidebar/block.json';
 		register_block_type($json_path);
 	}
 
@@ -29,10 +29,14 @@ class Block
 		 * Also, in an attempt to future-proof this data, we loosely namespace
 		 * the meta_keys by prefixing with 'iop_'
 		 */
-		$meta_args = ["single" => true, "show_in_rest" => true];
-		register_post_meta("page", "iop_toggle", array_merge($meta_args, ["type" => "boolean"]));
-		register_post_meta("page", "iop_altHeadline", $meta_args);
-		register_post_meta("page", "iop_test", $meta_args);
-		register_post_meta("", "headline", ["show_in_rest" => true]);
+		$meta_args = ['single' => true, 'show_in_rest' => true];
+		register_post_meta(
+			'page',
+			'iop_toggle',
+			array_merge($meta_args, ['type' => 'boolean'])
+		);
+		register_post_meta('page', 'iop_altHeadline', $meta_args);
+		register_post_meta('page', 'iop_test', $meta_args);
+		register_post_meta('', 'headline', ['show_in_rest' => true]);
 	}
 }

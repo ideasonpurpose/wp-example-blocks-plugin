@@ -10,7 +10,7 @@
 		"message": {
 			"type": "string",
 			"source": "html",
-			"selector": "h1"
+			"selector": "div"
 		}
 	},
 	"supports": {

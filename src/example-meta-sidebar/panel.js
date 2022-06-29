@@ -15,7 +15,7 @@ const icon = (
 	</SVG>
 );
 
-console.log('example-meta-sidebar: sidebar.js');
+console.log('example-meta-sidebar: panel.js');
 
 registerPlugin('example-meta-plugin-panel', {
 	icon,
