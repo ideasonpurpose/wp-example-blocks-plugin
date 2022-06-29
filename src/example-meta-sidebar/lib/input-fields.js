@@ -52,14 +52,14 @@ export const InputFields = () => {
 	return (
 		<>
 			<TextControl
-				label="Alternate Page Title (from ACF)"
+				label="Plain Text Input"
 				value={meta.iop_altHeadline}
 				placeholder="Enter an alternate title"
 				onChange={updateMetaAltTitle}
 			/>
 
 			<ToggleControl
-				label="InputFields Toggle Component!!"
+				label="InputFields Toggle Component"
 				checked={!!meta.iop_toggle}
 				onChange={updateToggle}
 			/>
