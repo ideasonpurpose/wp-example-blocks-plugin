@@ -20,7 +20,7 @@ export const Edit = (props) => {
 		'r',
 		'Y-m-d H:i:s',
 		'd/m/Y H:i:s',
-		'g:ia \\o\\n l jS F Y',
+		'g:i a \\o\\n l \\t\\h\\e jS \\o\\f F Y',
 		'D M j G:i:s T Y',
 	];
 

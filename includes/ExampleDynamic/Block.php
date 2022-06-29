@@ -13,12 +13,13 @@ class Block
 
 	public function register()
 	{
+		/**
+		 * This is a dynamic block, so we need to append the render_callback
+		 * to the block object returned from register_block_type.
+		 */
 		$json_path = __DIR__ . '/../../build/example-dynamic/block.json';
-
-		$block_json = json_decode(file_get_contents($json_path), true);
-
-		$block_json['render_callback'] = [$this, 'render'];
-		register_block_type($block_json['name'], $block_json);
+		$block = register_block_type($json_path);
+		$block->render_callback = [$this, 'render'];
 	}
 
 	public function render($attributes, $content)
@@ -34,10 +35,8 @@ class Block
 		$wrapper_attributes = get_block_wrapper_attributes();
 		$date = date($attributes['format']);
 
-
-        $inflector = InflectorFactory::create()->build();
-        $label = $inflector->singularize('dates');
-
+		$inflector = InflectorFactory::create()->build();
+		$label = $inflector->singularize('dates');
 
 		return "<div {$wrapper_attributes}>Example Dynamic ({$label}) Block: <strong>{$date}</strong></div>";
 	}
