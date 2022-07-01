@@ -1,4 +1,4 @@
 import './panel';
-import './sidebar';
+// import './sidebar';
 console.log('example-meta-sidebar: index.js');
 import './styles.scss';
