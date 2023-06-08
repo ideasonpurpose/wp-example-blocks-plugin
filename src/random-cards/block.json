@@ -1,0 +1,41 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "ideasonpurpose/random-cards",
+	"title": "Random Cards",
+	"category": "text",
+	"icon": "images-alt2",
+	"version": "0.0.0",
+	"attributes": {
+		"post_type": {
+			"type": "string",
+			"default": "post"
+		},
+		"count": {
+			"type": "integer",
+			"default": 1
+		},
+		"tax_filter": {
+			"type": "string",
+			"default": "post_tag"
+		},
+		"terms_filter": {
+			"type": "array",
+			"default": []
+		}
+	},
+	"supports": {
+		"align": true,
+		"color": {
+			"text": true,
+			"background": true
+		}
+	},
+	"styles": [
+		{ "name": "default", "label": "Default", "isDefault": true },
+		{ "name": "outline", "label": "Outline" }
+	],
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

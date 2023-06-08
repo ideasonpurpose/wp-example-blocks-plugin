@@ -17,7 +17,7 @@
 
 namespace IdeasOnPurpose;
 
-require __DIR__ . "/vendor/autoload.php";
+require __DIR__ . '/vendor/autoload.php';
 
 /**
  * Each Block registers itself on init, so there's no need to wrap these instantiations
@@ -33,3 +33,5 @@ require __DIR__ . "/vendor/autoload.php";
 new Blocks\ExampleRichText\Block();
 new Blocks\ExampleDynamic\Block();
 new Blocks\ExampleMetaSidebar\Block();
+
+new Blocks\RandomCards\Block();

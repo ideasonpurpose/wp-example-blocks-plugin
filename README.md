@@ -1,6 +1,6 @@
-# Example Blocks Plugin
+# IOP Example Blocks Plugin
 
-This project includes three example blocks in this plugin:
+This project was initially scaffolded with `npx @wordpress/create-block`, the resulting plugin includes the following example blocks:
 
 ### RichText Block
 
@@ -16,9 +16,11 @@ This block uses a Composer autoloaded PHP library to process dynamic text before
 
 The sidebar pulldown selector provides formatting choices for the dynamic date string.
 
-### Metadata Block Editor Plugin
+### Document-level Metadata Block Editor Plugin
 
-This plugin adds two alternate interfaces for saving metadata to the currently edited post. These interfaces are completely interchangeable, values entered in one can be modified in the other. Values are not saved until the post is updated.
+This plugin adds two alternate metadata interfaces to the Block Editor. First, a  Plugin Document Settings Panel is added to the list of Document attribute input. Second, a totally separate  Plugin Sidebar  and more-menu item provide the same options in a different place. 
+
+, but everyone agreed it was too hidden and easily forgotten.  alternate interfaces for saving metadata to the currently edited post. These interfaces are completely interchangeable, values entered in one can be modified in the other. Values are not saved until the post is updated.
 
 The two interfaces:
 
@@ -31,22 +33,24 @@ My preference is the Document Settings Panel. This feels better integrated into 
 
 The core of current WordPress Block development is the **block.json** file, which is referenced from both PHP and JavaScript. Because of this, the JSON file must exist in the compiled output at a path relative to the JS files, but also somewhere known to PHP.
 
-Since PHP is not processed, we separate the source code into two related directories, one for PHP and one for processed assets like JS, SCSS and JSON.
+Since PHP is not processed, the plugin's source is separated into two like-named directories, one for PHP and one for processed assets like JS, SCSS and JSON.
 
 The file tree of most blocks then looks something like this:
 
-- **BlockName** - _PHP_
-  - **Block.php** - initializes the block from PHP, and any other needed stuff
-- **block-name** - _JavaScript_
-  - **block.json** - the main config file, also referenced from PHP
-  - **index.js** - Referenced from block.json's `editorScript`
-  - **edit.js** - The block's `edit` function and supporting code
-  - **view.js** - Scripts for the front-end only, should import styles.
-  - **styles.scss** - Block specific styles
+- includes/
+  - **BlockName/** - _PHP_
+    - **Block.php** - initializes the block from PHP, and any other needed stuff
+- src/
+  - **block-name/** - _JavaScript_
+    - **block.json** - the main config file, also referenced from PHP
+    - **index.js** - Referenced from block.json's `editorScript`
+    - **edit.js** - The block's `edit` function and supporting code
+    - **view.js** - Scripts for the front-end only, should import styles.
+    - **styles.scss** - Block specific styles
 
 ### Loading Assets
 
-For plugins, asset loading is mostly automated away thanks to `@wordpress/scripts` finding every block.json in the src directory, then registering referenced assets.
+For plugins, asset loading is mostly automated away thanks to `@wordpress/scripts` finding every **block.json** file _anywhere_ in the src directory, then registering all referenced assets.
 
 ## Notes
 
@@ -56,7 +60,7 @@ Random stuff and notes about poorly documented features
 
 The [@wordpress/dependency-extraction-webpack-plugin](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-dependency-extraction-webpack-plugin/) is a bit of a hack that sits on top of webpack externals and omits a subset of known scripts which are included with WordPress. Support for this plugin was added to our build toolchain in [docker-build v0.12.0](https://github.com/ideasonpurpose/docker-build/blob/master/CHANGELOG.md#v0120) and [wp-theme-init v2.7.0](https://github.com/ideasonpurpose/wp-theme-init/blob/master/CHANGELOG.md#v270), which now recognizes the plugin's `*.asset.php` snippet files.
 
-While most all @wordpress scripts are available via the `wp` global, including these dependencies in development enables VS Code's JS-Intellisense helpers and creates a much more specific set of dependencies when including the scripts.
+While most all **@wordpress** scripts are available via the `wp` global, including these dependencies in development enables VS Code's JS-Intellisense helpers and creates a much more specific set of dependencies when including the scripts.
 
 ### Misc.
 
@@ -98,6 +102,30 @@ I'm thinking about ways of migrating existing ACF field data into the Block Edit
 
 Another issue is that when editing posts, ACF input fields are saved after Block Editor metadata fields, so the ACF entries will overwrite the Block Editor entries, making it seem like the fields aren't saving.
 
+## Changes from the default `@wordpress/create-block` scaffold
+
+This project was initially scaffolded by running [`npx @wordpress/create-block`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-create-block/). To better fit our development practices, we added or modified the following:
+
+### Additional Output Files
+
+**@wordpress/scripts** `plugin-zip` [advanced configuration](https://github.com/WordPress/gutenberg/blob/65550e38a68befd30250a05a05d76a7d42ebfc22/packages/scripts/README.md#advanced-information-7) options references the **package.json** [`files` property](https://docs.npmjs.com/cli/v6/configuring-npm/package-json#files) for specifying additional files to include in the distribution package.
+
+> **TODO:** Possibly move PHP files into block.json.render to be automatically included. [Changelog](https://github.com/WordPress/gutenberg/blob/b40672c3e2f016c47d0e3be198eaf0b815cdbe7b/packages/scripts/CHANGELOG.md#new-features), [#43917](https://github.com/WordPress/gutenberg/pull/43917)
+
+### Composer
+
+The Composer application is called from Docker via a set of basic script commands added to **package.json** and a simple **docker-compose.yml** wrapper. The **vendor** directory lives at the top level of the plugin, parallel to **src**, **includes** and **node_modules**.
+
+Composer's autoloader is called from the plugin's entry PHP file.
+
+### Build tools
+
+We add [version-everything](https://github.com/joemaller/version-everything), [auto-changelog](https://github.com/CookPete/auto-changelog) and Prettier's [PHP Plugin](https://github.com/prettier/plugin-php).
+
+a `postbuild` script which is just an alias to the `plugin-zip` script. When would we ever build without outputting a bundle?
+
+A custom version-everything config was added to package.json config to enable version updates in the `Stable tag:` field of the plugin's **readme.txt** metadata.
+
 ### Block.json file references
 
 Any files references from **block.json** are relative to the output, not the source file. I hate this. The references are somehow also used for webpack entry-points, which means they are simultaneously being used to determine the _before_ while also knowing the _after_. It's really just madness.
@@ -108,29 +136,19 @@ Any **block.json** files in **./src** will be scanned and used to generate entry
 
 ### `npm run build`
 
-This will include any files referenced from **block.json**'s `editorScript` property. References are pre-compilation.
+This will include any files referenced from all included **block.json** `editorScript` properties. File references are pre-compilation.
 
 ### Block.json styles
 
 Sass and CSS files are are referenced using their post-compilation names. The source files should be imported into JS files so they can be handled by webpack. Output filenames are dependent upon where the source was imported.
 
-### Composer
-
-Composer's **vendor** directory lives at the top level of the plugin, parallel to **src**, **includes** and **node_modules**. [@wordpress/scripts][] `plugin-zip` [advanced configuration](https://github.com/WordPress/gutenberg/blob/65550e38a68befd30250a05a05d76a7d42ebfc22/packages/scripts/README.md#advanced-information-7) options recognize a `files` property in **package.json** which can contain an array of additional files to include in the distribution package.
-
 ## Other fixes
-
-### Better builds
-
-Besides adding the main plugin file and vendor to package.json's `files` key, I also added a `postbuild` script which is just an alias to the `plugin-zip` script. Why build but not bundle?
-
-### version-everything
-
-[version-everything](https://www.npmjs.com/package/version-everything) was added with a tweaked package.json config so it updates the `Stable tag:` field in the plugin's **readme.txt** metadata.
 
 ## Minimal `block.json` files
 
 For the Meta Sidebar example, a bare bones **block.json** file is used to assign entrypoints for the wp-scripts webpack build. This also handles loading the scripts, but since they're is no actual block to show, we can leave out nearly everything else. All that's needed for WordPress to load the scripts is a `name`. With that `editorScript` and other assets will load automatically when the **block.json** file is registered.
+
+Complete [block.json property reference](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#block-api)
 
 ```json
 {
@@ -143,7 +161,7 @@ For the Meta Sidebar example, a bare bones **block.json** file is used to assign
 }
 ```
 
-### Attributes
+### Properties
 
 - [`$schema`](https://raw.githubusercontent.com/WordPress/gutenberg/trunk/schemas/json/block.json) - Helpful for development
 - [`apiVersion`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#api-version) - Not required since there are no blocks to save, but it's probably a good idea to include for future compatibility.
@@ -152,7 +170,13 @@ For the Meta Sidebar example, a bare bones **block.json** file is used to assign
 - [`editorScript`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#editor-script) - This script will be loaded by the Block Editor.
 - [`editorStyle`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#editor-style) - Styles for the editor. Paths for this and the editorScript property are both relative to the _output_ which, as previously stated, is nuts.
 
-<!--
+### Additional block.json Properties
+
+Other useful attributes:
+
+- [`viewScript`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#editor-style) - Frontend-only javascript
+- [`script`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#style) - A common script for _both_ the frontend and the block editor.
+- [`style`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#style) - Styles for _both_ the frontend and the block editor.
 
 ---
 
@@ -170,19 +194,18 @@ To use the blocks individually, require the directory into your editor scripts, 
 
 ```php
 // functions.php
-new Blocks\ExampleRichText\Block;
+new Blocks\ExampleRichText\Block();
 ```
 
 ```js
 // editor.js  (editor scripts source)
-require("../blocks/example-rich-text");
+require('../blocks/example-rich-text');
 ```
 
 ```js
 // main.js  (frontend scripts source)
-require("../blocks/example-rich-text/view.js");
+require('../blocks/example-rich-text/view.js');
 ```
-
 
 # Notes on building Blocks
 
@@ -194,15 +217,13 @@ For now, all scripts should be added to `src/js/editor.js` and `src/js/main.js`.
 
 </blockquote>
 
-
 ### How to handle Block.json in themes?
+
 There's a reason for this. Registering a block happens from PHP and from JavaScript. The [`register_block_type`](https://developer.wordpress.org/reference/functions/register_block_type/) php function loads a JSON file which _might_ also be loaded from JavaScript. If we compiled the JSON with the rest of the JS build, PHP would have nothing to load, or we'd have to come up with some sort of convoluted, fragile arrangement for preserving or delivering the JSON to a known location.
 
 Place `BlockName` into `<themename>/lib/` and `block-name` into `<themename>/src/blocks`
 
-
 # Leftovers
-
 
 **New Problem:** The editor loads a ridiculous amount of scripts. If all the dependencies for blocks are loaded in the front end, we're suddenly transferring nearly 5 MB of JS on each page load.
 
@@ -215,7 +236,5 @@ Place `BlockName` into `<themename>/lib/` and `block-name` into `<themename>/src
 Those filenames are terrible, I might switch them to **editor**, **common** and **view**. Or **backend**, **common** and **frontend**?
 
 _Huh, seems to actually be working!_
-
--->
 
 [@wordpress/scripts]: https://github.com/WordPress/gutenberg/blob/HEAD/packages/scripts/README.md
