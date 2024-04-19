@@ -13,7 +13,11 @@ import { store as coreStore } from '@wordpress/core-data';
 
 import beaker from './lib/BeakerAnimated';
 // import icon from './lib/beaker-animated.svg'; // imports as base64 blob
-import { src as puzzle } from './lib/puzzle.json';
+
+// Should not import the named export 'src' (imported as 'puzzle') from default-exporting module (only default export is available soon)
+// import { src as puzzle } from './lib/puzzle.json';
+import puzzleJson from './lib/puzzle.json';
+const puzzle = puzzleJson.src;
 
 let i = 0;
 // let svgLib = ['beaker', 'logo', 'rocket', 'atom', 'basketball'];

@@ -35,12 +35,12 @@
 		"singleQuote": true
 	},
 	"devDependencies": {
-		"@prettier/plugin-php": "^0.19.5",
-		"@wordpress/scripts": "^26.6.0",
+		"@prettier/plugin-php": "^0.22.2",
+		"@wordpress/scripts": "^27.6.0",
 		"auto-changelog": "^2.4.0",
 		"chokidar-cli": "^3.0.0",
 		"lodash": "^4.17.21",
-		"version-everything": "^0.9.3"
+		"version-everything": "^0.11.2"
 	},
 	"version-everything": {
 		"files": [

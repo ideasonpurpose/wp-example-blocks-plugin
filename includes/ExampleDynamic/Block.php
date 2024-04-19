@@ -24,6 +24,7 @@ class Block
 
 	public function render($attributes, $content)
 	{
+		global $post;
 		/**
 		 * Note: get_block_wrapper_attributes() returns a string of block attributes (class & style)
 		 * ready to inject into a tag:
@@ -37,6 +38,18 @@ class Block
 
 		$inflector = InflectorFactory::create()->build();
 		$label = $inflector->singularize('dates');
+
+
+		// DEBUG SNIPPET START
+		if (class_exists('Kint')) {\Kint::$mode_default = \Kint::MODE_CLI;}
+		if (class_exists('Sage')) {\Sage::enabled(\Sage::MODE_CLI);}
+
+		error_log(@d($attributes, $content, $post));
+
+		if (class_exists('Kint')) {\Kint::$mode_default = \Kint::MODE_RICH;}
+		if (class_exists('Sage')) {\Sage::enabled(\Sage::MODE_RICH);}
+		// DEBUG SNIPPET END
+
 
 		return "<div {$wrapper_attributes}>Example Dynamic ({$label}) Block: <strong>{$date}</strong></div>";
 	}
