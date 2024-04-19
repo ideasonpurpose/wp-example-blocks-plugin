@@ -1,6 +1,24 @@
 # IOP Example Blocks Plugin
 
-This project was initially scaffolded with `npx @wordpress/create-block`, the resulting plugin includes the following example blocks:
+## Development
+
+This project was scaffolded with
+
+### Commands
+
+- **`start`** - runs the wp-scripts start script
+
+## About this project
+
+This project was initially scaffolded with `npx @wordpress/create-block`. Local development is similar to the standard IOP WordPress workflow, but for now, dev environment commands must be run in addition to our normal [WordPress dev environment](https://github.com/ideasonpurpose/docker-wordpress-dev).
+
+Local development is similar to the standard IOP WordPress workflow, but for now, it must be run in addition to our normal [WordPress dev environment](https://github.com/ideasonpurpose/docker-wordpress-dev).
+
+To get started, run `npm run start` from the [wp-scripts default command set](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#setup):
+
+## Plugins
+
+the resulting plugin includes the following example blocks:
 
 ### RichText Block
 
@@ -18,9 +36,9 @@ The sidebar pulldown selector provides formatting choices for the dynamic date s
 
 ### Document-level Metadata Block Editor Plugin
 
-This plugin adds two alternate metadata interfaces to the Block Editor. First, a  Plugin Document Settings Panel is added to the list of Document attribute input. Second, a totally separate  Plugin Sidebar  and more-menu item provide the same options in a different place. 
+This plugin adds two alternate metadata interfaces to the Block Editor. First, a Plugin Document Settings Panel is added to the list of Document attribute input. Second, a totally separate Plugin Sidebar and more-menu item provide the same options in a different place.
 
-, but everyone agreed it was too hidden and easily forgotten.  alternate interfaces for saving metadata to the currently edited post. These interfaces are completely interchangeable, values entered in one can be modified in the other. Values are not saved until the post is updated.
+, but everyone agreed it was too hidden and easily forgotten. alternate interfaces for saving metadata to the currently edited post. These interfaces are completely interchangeable, values entered in one can be modified in the other. Values are not saved until the post is updated.
 
 The two interfaces:
 

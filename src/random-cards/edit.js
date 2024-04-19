@@ -484,10 +484,10 @@ export const Edit = (props) => {
 			return postTypes.map((f) => ({ value: f.slug, label: f.name }));
 		}, [postTypes]);
 
-		/**
-		 * taxOptions returns an option-list of
-		 * @returns {Object[] | null}
-		 */
+	/**
+	 * taxOptions returns an option-list of
+	 * @returns {Object[] | null}
+	 */
 	const taxOptions = () => {
 		const taxonomies = useTaxonomies(post_type);
 		console.log({ msg: 'in taxOptions', post_type, taxonomies });
@@ -509,15 +509,16 @@ export const Edit = (props) => {
 			console.log('termSuggestions useMemo');
 			// // handle loading
 			// if (false) {
+				console.log({ post_type, tax_filter });
 			return [{ label: 'Loading Terms...', value: '' }];
 			// }
 
-			console.log({ post_type, tax_filter });
 
 			// TODO: Any undefined values returned as a suggestion will throw errors from FormTokenField
 
 			return ['doggo', 'cat', 'froggy', 'bird', 'lizard', 'llama', post_type];
 		}, [post_type, tax_filter]);
+
 
 	return (
 		<div {...blockProps}>

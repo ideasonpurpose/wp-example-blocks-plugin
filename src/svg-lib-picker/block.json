@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "ideasonpurpose/svg-lib-picker",
+	"title": "SVG Library Picker",
+	"category": "text",
+	"icon": "palmtree",
+	"version": "0.0.0",
+	"supports" : {
+		"html": false
+	},
+
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

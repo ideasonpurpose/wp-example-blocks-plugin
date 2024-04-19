@@ -35,3 +35,14 @@ new Blocks\ExampleDynamic\Block();
 new Blocks\ExampleMetaSidebar\Block();
 
 new Blocks\RandomCards\Block();
+
+new Blocks\SvgLibPicker\Block();
+
+// add_filter('block_categories_all', function ($blockCats) {
+// 	$blockCats[] = [
+// 		'slug' => 'ideasonpurpose',
+// 		'title' => 'Ideas On Purpose',
+// 	];
+//     error_log('doing blockCats');
+// 	return $blockCats;
+// });
